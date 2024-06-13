@@ -1,0 +1,69 @@
+A) Hiring:
+
+Project Description: We have to calculate the number of male and female are hired in the company. So, we used status column to the number of people hired and event_name for number of male and female are hired .
+Approach: In order to do the given task, I have taken status column ,where function is used to find number of people hired and event_name column function is used to find the count the number of male and female  are  hired. 
+Command to execute: 
+Select status, SUM(CASE WHEN event_name = 'male' THEN 1 ELSE 0 END) AS MaleHired, SUM(CASE WHEN event_name = 'female' THEN 1 ELSE 0 END) AS FemaleHired FROM[dbo].[Statistics.xlsx - Sheet1] WHERE status IN ('hired') GROUP BY status
+Tech Stack used: MySQL Command Client 8.0
+Insights: In the table status is given in combination of hired and rejected data we separated by group by function.
+
+B) Average Salary:
+
+Project Description: We have to calculate the average salary by, Adding all the salaries for a select group of employees and then dividing the sum by the number of employees in the group.
+Approach: In order to do the task, I have taken department column, I used group by column to categorize the sub departments and I used avg function to find out the average salary.
+Command to execute: 
+   select Department, avg(Offered_Salary) as average_salary
+   from [dbo].[Statistics.xlsx - Sheet1]
+  group by Department;
+Tech Stack used: MySQL Command Client 8.0
+Insights: By running this query, you will get a result set with multiple rows, where each row represents a unique category in the "department" column along with its corresponding average salary.
+
+C) Class Intervals:
+
+Project Description: We have to find the class interval is the difference between the upper class limit and the lower class limit.
+Approach: In order to do the task, I have taken offered salary column I have used concat function and I have taken 10000 as limit and perform the action
+Command to execute: 
+   SELECT CONCAT('Rs', FLOOR(offered_salary/10000)*10000, ' -Rs' (FLOOR(offered_salary/10000)+1)*10000-1) AS SalaryInterval, COUNT(*) AS Frequency
+   FROM [dbo].[Statistics.xlsx - Sheet1]
+   GROUP BY FLOOR(offered_salary/10000);
+Tech Stack used: MySQL Command Client 8.0
+Insights: By running this query, we will find the class interval of the class.  
+
+D) Charts and Plots:
+
+Project Description: By drawing the graph we  have to show proportion of people working different department .
+Approach: In order to do the task, I have used matplotlib to draw the graph for the people working different department and pandas to calculate in different categories in department.
+Command to execute: 
+import pandas as pd
+import matplotlib.pyplot as plt
+df=pd.read_csv(r"C:\Users\91812\Dropbox\PC\Downloads\Statistics.csv")
+from sklearn.preprocessing import LabelEncoder 
+le = LabelEncoder()
+label = le.fit_transform(df['Department'])
+s=df['Department'].unique()
+s.sort()
+dup=list(df['Department'])
+vals=[]
+for i in s:
+    vals.append(dup.count(i))
+plt.pie(vals,labels=s,autopct="%.2f")
+Tech Stack used: JUPYTER NOTEBOOK
+Insights: By running this query, we will find the graph of the department .  
+
+E) Charts: 
+
+Project Description: By drawing the graph we  have to show proportion of people working different post tiers .
+Approach: In order to do the task, I have used matplotlib to draw the graph for the people working different department and pandas to calculate in different categories in department.
+Command to execute: 
+import pandas as pd
+import matplotlib.pyplot as plt
+df=pd.read_csv(r"C:\Users\91812\Dropbox\PC\Downloads\Statistics.csv")
+s=df['Post Name'].unique()
+s.sort()
+dup=list(df['Post Name'])
+vals=[]
+for i in s:
+    vals.append(dup.count(i))
+plt.pie(vals,labels=s,autopct="%.2f")
+Tech Stack used: JUPYTER NOTEBOOK
+Insights: By running this query, we will find the graph of the department .  
